@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+}
+
+footer {
+    text-align: center;
+    height: 30vh;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.listItem {
+    list-style-type: none;
+    min-width: 300px;
+}
+
+.map {
+    height: 300px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+hr {
+    width: 58%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+/* Forma */
+
+#forma {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,28 @@
+.links {
+    background-color: beige;
+    display: flex;
+    justify-content: space-around;
+    height: 5vmax;
+    min-height: 60px;
+    align-items: center;
+}
+
+.links a {
+    font-size: 25px;
+    text-decoration: none;
+    color: darkblue;
+}
+
+.languageButton {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    padding: 6px;
+    border-radius: 10%;
+}
+
+@media (max-width: 767px) {
+    .links {
+        flex-direction: column;
+    }
+}

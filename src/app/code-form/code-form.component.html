@@ -1,0 +1,39 @@
+<div class="body">
+    <app-code-explanation></app-code-explanation>
+    <div class="container">
+        <form class="hash-form" ngNativeValidate #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+            <div class="clearfix">
+                <div class="part-divider">
+                    <div class="select" *ngIf="languageNumber==1">
+                        <select [(ngModel)]="defaultValue" name="tipas" ngModel #tipas="ngModel" required="required">
+                            <option *ngFor="let opt of optionsAndLinks" value="{{opt.codeOption}}">{{opt.enname}}</option>
+                        </select>
+                    </div>
+                    <div class="select" *ngIf="languageNumber==2">
+                        <select [(ngModel)]="defaultValue" name="tipas" ngModel #tipas="ngModel" required="required">
+                            <option *ngFor="let opt of optionsAndLinks" value="{{opt.codeOption}}">{{opt.ltname}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="part-divider" *ngIf="defaultValue=='rail' || defaultValue=='decrail'">
+                    <input class="number-input" type="number" name="numeris" min="1" max="26" [(ngModel)]="number" ngModel #numeris="ngModel" required="required" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="half-divider">
+                    <textarea class="writable-textarea" name="tekstas" [placeholder]="defaultText2[languageNumber-1]" ngModel #tekstas="ngModel" required="required"></textarea>
+                </div>
+                <div class="half-divider">
+                    <textarea class="hash-textarea" [placeholder]="defaultTextBlank[languageNumber-1]" name="" disabled="disabled">{{codedText}}</textarea>
+                </div>
+            </div>
+            <button *ngIf="allowSubmit" class="submit-button" type="submit">
+                {{button[languageNumber-1]}}
+            </button>
+            <button *ngIf="!allowSubmit" class="submit-button" type="submit" disabled="disabled">
+                {{buttonRepeat[languageNumber-1]}} {{breakTimer}}s
+            </button>
+
+        </form>
+    </div>
+</div>

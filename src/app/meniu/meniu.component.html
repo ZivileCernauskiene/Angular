@@ -1,0 +1,13 @@
+<div class="links">
+    <a routerLink="index">{{main[languageNumber-1]}}</a>
+
+    <a routerLink="code">{{code[languageNumber-1]}}</a>
+
+    <a routerLink="notes">{{note[languageNumber-1]}}</a>
+    <a routerLink="contact">{{contact[languageNumber-1]}}</a>
+
+    <!-- <a routerLink="memory">{{memory[languageNumber-1]}}</a> -->
+</div>
+<div>
+    <button class="languageButton" (click)="setLanguage()">{{languageList[languageNumber-1]}}</button>
+</div>

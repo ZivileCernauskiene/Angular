@@ -1,0 +1,213 @@
+.container {
+    width: 100%;
+    display: inline-block;
+    /*min-width: 800px;*/
+    position: relative;
+}
+
+.addForm {
+    padding: 5px 0 0px 10px;
+}
+
+.colorSelect {
+    padding: 5px;
+}
+
+.colorOption {
+    padding: 5px;
+    color: beige;
+    width: 60px;
+}
+
+
+/*.fixed-bg {
+    background-image: url("pattern.png");
+    background-repeat: repeat;
+    background-color: rgb(247, 222, 186);
+    min-height: calc(100vh - 5vmax);
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+}*/
+
+.notes {
+    display: block;
+    height: calc(100vh - 5vmax);
+    width: 100vw;
+    background-image: url("pattern.png");
+    background-repeat: repeat;
+    background-color: rgb(247, 222, 186);
+}
+
+.note-container {
+    /* display: flex;
+    flex-direction: column;
+    align-items: flex-end; */
+    position: absolute;
+    margin: 15px;
+    height: max-content;
+    width: max-content;
+    /* top: 150px;
+    left: 15px; */
+}
+
+.note-container.yellow .draggable-header,
+.note-container.yellow .draggable-side-left,
+.note-container.yellow .draggable-side-right,
+.note-container.yellow .draggable-footer {
+    background-color: yellow;
+}
+
+.note-container.yellow textarea {
+    background-color: #fdfdc9;
+}
+
+.note-container.yellow .remove-button:hover,
+.note-container.yellow .save-button:hover,
+.note-container.yellow .color-button:hover,
+.note-container.yellow .edit-button:hover {
+    background-color: #ff9100;
+}
+
+.note-container.yellow .remove-button,
+.note-container.yellow .save-button,
+.note-container.yellow .color-button,
+.note-container.yellow .edit-button {
+    border-color: yellow;
+}
+
+.note {
+    background-color: rgb(255, 80, 188);
+    border: 2px dashed;
+    border-color: rgb(255, 80, 188);
+    color: black;
+    min-height: 50px;
+    min-width: 200px;
+    font-size: 16px;
+    border-width: 2px;
+    border-radius: 0px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    outline: none;
+    overflow: hidden;
+    overflow-y: auto;
+    z-index: inherit;
+}
+
+.draggable-header {
+    background-color: #f0f;
+    width: 100%;
+    height: 20px;
+    text-align: right;
+    position: relative;
+    cursor: move;
+}
+
+.draggable-side-left {
+    width: 5px;
+    height: calc(100% + 16px);
+    background-color: #f0f;
+    position: absolute;
+    left: -5px;
+    top: 0;
+    cursor: move;
+}
+
+.options {
+    border: bisque 3px solid;
+    border-color: bisque;
+}
+
+.spalvos select {
+    background-color: blueviolet;
+}
+
+.draggable-side-right {
+    width: 5px;
+    height: calc(100% + 16px);
+    background-color: #f0f;
+    position: absolute;
+    right: -5px;
+    top: 0;
+    cursor: move;
+}
+
+.draggable-footer {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f;
+    position: absolute;
+    bottom: -16px;
+    cursor: move;
+}
+
+.draggable-header>i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.add-button {
+    padding: 3px;
+    padding-right: 5px;
+    padding-left: 4px;
+    padding-bottom: 2px;
+    transform: translateY(2px);
+    margin-left: 10px;
+    border-radius: 15%;
+    background-image: linear-gradient(rgb(217, 255, 0), rgba(255, 251, 0, 0.342));
+    font-size: larger;
+    position: relative;
+}
+
+.add-button:hover,
+.save-button:hover,
+.color-button:hover,
+.remove-button:hover,
+.edit-button:hover {
+    background-color: crimson;
+    cursor: pointer;
+}
+
+.remove-button,
+.save-button,
+.color-button,
+.edit-button {
+    padding: 4px;
+    border: solid #f0f 1px;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 10px;
+    bottom: -16px;
+    position: absolute;
+}
+
+.remove-button {
+    right: 5%;
+}
+
+.save-button {
+    left: 15%;
+}
+
+.color-button {
+    left: 25%;
+}
+
+.edit-button {
+    left: 4%;
+}
+
+.unsaved {
+    border: 2px dashed brown;
+}
+
+.small {
+    width: 20px;
+    height: 20px;
+}

@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+    margin: 0%;
+    border: 0px;
+}
+
+@media (max-width: 767px) {
+    .main-menu {
+        width: 25%;
+        float: left;
+        min-width: 120px;
+    }
+    body .main-menu .links {
+        height: auto;
+        max-height: unset;
+        height: 100vh;
+        justify-content: flex-start;
+    }
+    body .main-menu .links a {
+        margin-top: 30px;
+    }
+    section {
+        width: 75%;
+        float: right;
+        max-width: calc(100% - 120px);
+    }
+}

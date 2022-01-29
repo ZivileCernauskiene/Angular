@@ -1,0 +1,151 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hash-form {
+    margin-top: 20px;
+    border: solid 2px #4f5cff;
+    border-radius: 15px;
+    padding: 15px;
+    background: #ffffff;
+    position: relative;
+}
+
+select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    outline: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.number-container {
+    width: 20%;
+}
+
+.select {
+    width: 100%;
+    border: solid 1px #777777;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.select::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: #4f5cff;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    justify-self: end;
+}
+
+select,
+.select:after {
+    grid-area: select;
+}
+
+.half-divider {
+    width: 50%;
+    float: left;
+}
+
+.half-divider {
+    padding-right: 10px;
+}
+
+.half-divider+.half-divider {
+    padding-right: 0;
+    padding-left: 10px;
+}
+
+.part-divider {
+    width: 80%;
+    float: left;
+}
+
+.part-divider {
+    padding-right: 10px;
+}
+
+.part-divider+.part-divider {
+    padding-right: 0;
+    padding-left: 10px;
+    width: 20%;
+}
+
+.writable-textarea,
+.hash-textarea {
+    width: 100%;
+    resize: vertical;
+    height: 400px;
+    min-height: 100px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border-bottom-right-radius: 0;
+    outline: none;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+.clearfix::after {
+    content: '';
+    clear: both;
+    display: table;
+}
+
+.submit-button {
+    width: 100%;
+    border: solid 1px #777777;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1.1;
+    margin-top: 20px;
+    background-color: #4f5cff;
+    color: #ffffff;
+}
+
+.submit-button:hover {
+    opacity: 0.8;
+}
+
+.number-input {
+    width: 100%;
+    border: solid 1px #777777;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1.1;
+    outline: none;
+}

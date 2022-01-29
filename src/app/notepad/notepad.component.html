@@ -1,0 +1,57 @@
+<div class="container">
+
+    <div>
+
+    </div>
+    <div class="notes">
+        <div class="addForm">
+            <form [formGroup]="colorForm" (ngSubmit)="addNote()">
+                <select class="colorSelect" [ngStyle]="{'background-color':spalva}" formControlName="color" (change)="ChangeColor()">
+                    <option class="colorOption" *ngFor="let x of colorObject" value="{{x.outer}}" [ngStyle]="{'background-color':x.outer}"></option>
+                </select>
+
+                <button class="add-button" [title]="add[languageNumber-1]"><i class="fa fa-plus"></i></button>
+            </form>
+
+
+            <!-- <button title="pridėti naują" class="add-button" (click)="addNote()"><i class="fa fa-plus"></i></button>
+            <form class="spalvos" ngNativeValidate #myColorForm="ngForm" (ngSubmit)="submitForm(myColorForm)">
+                <select name="" id="" [ngStyle]="{'background-color':spalva}">
+                    <option class="options" [value]="x" *ngFor="let x of colorList" [(ngModel)]="spalva" [ngStyle]="{'background-color' : x, 'position' : 'absolute', 'border-color':'brown'}" >{{x}} 
+                    </option>
+            </select>
+                <button type="submit">submitas</button>
+            </form> -->
+        </div>
+
+        <div class="note-container {{x.color}}" *ngFor="let x of noteList" cdkDrag (cdkDragStarted)="dragStart($event) " [ngStyle]="{'z-index':x.pozZ, 'top' : x.top+'px', 'left' : x.left+'px'}">
+
+            <form [ngStyle]="{'transform': FromDb? 'translate3d(' + x.pozX + 'px, '+x.pozY + 'px, ' + x.pozZ + 'px)':''}" [id]="'note'+x.id" ngNativeValidate #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+
+                <div class="draggable-header" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"><i class="fa fa-compress"></i></div>
+                <div class="draggable-side-left" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"></div>
+                <div class="draggable-side-right" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"></div>
+                <div class="draggable-footer" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"></div>
+
+                <button [title]="delete[languageNumber-1]" class="remove-button" (click)="deleteNote(x.id)"><i class="fa fa-trash"></i></button>
+
+                <textarea [ngStyle]="{'z-index':x.pozZ}" *ngIf="x.saved" class="note" [(ngModel)]="x.tekstas" name="tekstas" id="{{x.id}}" ngModel #tekstas="ngModel" disabled placeholder="{{place2[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'background-color':x.color.innerColor}"
+                    [title]="saved[languageNumber-1]">
+                    
+                </textarea>
+                <textarea *ngIf="!x.saved" ngModel #tekstas="ngModel" [(ngModel)]="x.tekstas" class="note" name="tekstas" id="{{x.id}} " [title]="unsaved[languageNumber-1]" placeholder="{{place[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'border-color':'black', 'background-color':x.color.innerColor}">
+                    
+                </textarea>
+
+                <input name="width" type="hidden" [(ngModel)]="x.width" ngModel #width="ngModel" />
+                <input name="height" type="hidden" [(ngModel)]="x.height" ngModel #height="ngModel" />
+
+                <!-- <button title="Keisti spalvą" class="color-button" (click)="changeColor(x.id)"><i class="fa fa-tint"></i></button> -->
+                <button [title]="save[languageNumber-1]" class="save-button" (click)="saveNote(x.id, myForm)"><i class="fa fa-save"></i></button>
+                <button [title]="edit[languageNumber-1]" class="edit-button" (click)="editNote(x.id)"><i class="fa fa-edit"></i></button>
+
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
