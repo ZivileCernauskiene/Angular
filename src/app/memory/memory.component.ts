@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from '../language.service';
 
 @Component({
   selector: 'app-memory',
@@ -7,10 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MemoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private language:LanguageService) {
+      this.language.languageNumber.subscribe(x=>this.languageNumber=x)
+   }
 
   ngOnInit(): void {
   }
+
+  languageNumber=this.language.getLanguage();
+  title=["This is full CSS memory game", "Atminties žaidimas, CSS paveikslėliai"]
+  element=["Number of different elements", "Skirtingų elementų kiekis"]
+  startText=["Start", "Pradėti"]
+  more=["More", "Daugiau"]
+  less=["Less", "Mažiau"]
+  alertLow=["No less than 2", "Ne mažiau nei 2"]
+  restart=["Restart", "Iš naujo"]
+  win=["You win", "Laimėjote"]
+
 
   maxUsedClasses = 4;
   delayTime = 500;
@@ -25,6 +39,8 @@ export class MemoryComponent implements OnInit {
       'triangle', 'triangle1', 'triangle2', 'triangle3', 'triangle4', 'triangle5',
       'triangle6', 'triangle7', 'triangle8', 'triangle9', 'triangle10', 'triangle11'
   ];
+
+  alertHi =["No more than "+this.availableClasses.length.toString(), "Ne daugiau nei "+this.availableClasses.length.toString()]
 
   shuffledAvailableClasses = this.shuffleArray(this.availableClasses);
   unshuffledCards: any
@@ -56,13 +72,13 @@ export class MemoryComponent implements OnInit {
 
   usedClases(x: number) {
       if (this.maxUsedClasses <= 2 && x < 0) {
-          alert('Ne mažiau nei 2');
+          alert(this.alertLow[this.languageNumber]);
           this.maxUsedClasses = 2;
           return;
       }
 
       if (this.maxUsedClasses >= this.availableClasses.length && x > 0) {
-          alert('Ne daugiau nei ' + this.availableClasses.length);
+          alert(this.alertHi[this.languageNumber]);
           this.maxUsedClasses = this.availableClasses.length;
           return;
       }

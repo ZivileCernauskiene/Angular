@@ -1,8 +1,25 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .before {
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
+}
+
+.heading {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.victory {
+    border: 6px solid red;
+    animation: mymove 5s infinite;
 }
 
 .before button {
@@ -41,8 +58,8 @@
 }
 
 .full {
-    height: 60px;
-    width: 60px;
+    height: 65px;
+    width: 65px;
     background-color: gray;
     margin: 10px;
 }
@@ -71,8 +88,8 @@
 .round9,
 .round10,
 .round11 {
-    height: 60px;
-    width: 60px;
+    height: 65px;
+    width: 65px;
     margin: 10px;
 }
 
@@ -121,8 +138,8 @@ egg11 {
 .dashed9,
 .dashed10,
 .dashed11 {
-    height: 35px;
-    width: 35px;
+    height: 41px;
+    width: 41px;
     background-color: blueviolet;
     border: white dashed 12px;
     margin: 10px;
@@ -140,8 +157,8 @@ egg11 {
 .snow9,
 .snow10,
 .snow11 {
-    height: 35px;
-    width: 35px;
+    height: 41px;
+    width: 41px;
     background-color: white;
     border: dashed 12px rgb(18, 18, 216);
     margin: 10px;
@@ -161,9 +178,9 @@ egg11 {
 .triangle11 {
     width: 0px;
     height: 0px;
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-top: 60px solid red;
+    border-left: 33px solid transparent;
+    border-right: 33px solid transparent;
+    border-top: 64px solid red;
     margin: 10px;
 }
 
@@ -333,4 +350,10 @@ egg11 {
 
 .triangle11 {
     border-top-color: rgb(102, 128, 9);
+}
+
+@keyframes mymove {
+    50% {
+        border: 15px solid rgb(133, 20, 194);
+    }
 }

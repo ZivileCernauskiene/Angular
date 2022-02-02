@@ -20,7 +20,7 @@ export class MeniuComponent implements OnInit {
   code=["Kodavimas", "Cipher"]
   note=[ "Užrašai", "Notes"]
   contact=["Kontaktai", "Contacts"]
-  memory=["Memory game", "Žaidimas"]
+  memory=[ "Žaidimas","Memory game"]
   
   setLanguage(){
     if(this.languageNumber==1){
