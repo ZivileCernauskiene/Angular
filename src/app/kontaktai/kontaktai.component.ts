@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from '../language.service';
 
 @Component({
   selector: 'app-kontaktai',
@@ -13,6 +14,11 @@ import { Component, OnInit } from '@angular/core';
     max-width: calc(100% - 120px);
     flex-direction: column;
    }
+   .map {
+    
+    width: 300px;
+    height:300px;
+   }
    
 
 }
@@ -23,10 +29,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KontaktaiComponent implements OnInit {
 
-  constructor() { }
+  constructor(private language:LanguageService) {
+    this.language.languageNumber.subscribe(x=>this.languageNumber=x)
+   }
 
   ngOnInit(): void {
   }
-
+  languageNumber=this.language.getLanguage();
+  time=["Working hours:", "Darbo laikas: "]
+  
   
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { LanguageService } from '../language.service';
 
+
 @Component({
   selector: 'app-meniu',
   templateUrl: './meniu.component.html',
@@ -14,7 +15,7 @@ export class MeniuComponent implements OnInit {
   ngOnInit(): void {
   }
   languageNumber=this.language.getMeniuLanguage()
-  languageList=["LT", "EN"]
+  languageList=["EN", "LT"]
   
   main=[ "Pagrindinis", "Main"]
   code=["Kodavimas", "Cipher"]

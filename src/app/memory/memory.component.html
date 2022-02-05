@@ -1,16 +1,19 @@
 <div class="main">
 
     <h1 class="heading">{{title[languageNumber-1]}}</h1>
-    <div class="before" *ngIf="!start">
 
+    <div class="before" *ngIf="!start">
+        <br>
+        <p style="font-size: 25px;">{{explanation[languageNumber-1]}}</p>
+        <br>
         <p>{{element[languageNumber-1]}}: {{maxUsedClasses}} </p>
-        <div class="mygtukai">
+        <div>
             <div>
                 <button (click)=usedClases(-1)>{{less[languageNumber-1]}}</button>
                 <button (click)=usedClases(1)>{{more[languageNumber-1]}}</button>
             </div>
             <div>
-                <button (click)=starting()>{{startText[languageNumber-1]}}</button>
+                <button class="start" (click)=starting()>{{startText[languageNumber-1]}}</button>
             </div>
         </div>
 
