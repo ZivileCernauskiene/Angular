@@ -3,17 +3,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around
+    justify-content: space-around;
+    position: relative;
 }
 
-.title {
+.container img {
+    width: 600px;
+    height: auto;
+}
+
+.container a {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    height: 100px;
+    width: 200px;
+    background-image: -webkit-radial-gradient(rgba(179, 150, 150, 0.24), rgb(200, 200, 219));
+    border-radius: 20%;
+    cursor: pointer;
     font-size: 30px;
-}
-
-.classText {
-    font-size: 40px;
-}
-
-.link {
-    font-size: 20px;
+    font-weight: bold;
+    color: rgb(49, 37, 37)
 }
