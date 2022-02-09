@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { LanguageService } from '../language.service';
 
 @Component({
@@ -33,12 +34,17 @@ export class MainComponent implements OnInit {
   constructor(private language: LanguageService) {
     language.languageNumber.subscribe(x => {
       this.languageNumber = x
-
+      if(this.languageNumber==2){
+        this.text=this.textEn
+      }
+      else {
+        this.text=this.textLt
+      }
     })
   }
 
   ngOnInit(): void {
-
+this.show()
   }
   languageNumber = this.language.getLanguage()
 
@@ -48,21 +54,25 @@ export class MainComponent implements OnInit {
 
   img = ["../../assets/enPic.jpg", "../../assets/ltPic.jpg"]
 
+  text=["Duonos rožė. Verta paragauti", "Bananai, sudėti kažkur dubenėlyje", "Linksmosios dešrelės"]
+  textLt=["asd", "antasrsd", "trecias"]
+  textEn=["en1", "en2", "en3"]
+  images=["../../assets//img/a.jpg", "../../assets//img/b.jpg","../../assets//img/c.jpg"]
 
-  rotateText(text: string, radius: number, deg: number) {
-    let classIndex = 0
-    let txt = text.split("")
+  slideIndex=0
+  
+  show(){
+    if(this.slideIndex>this.images.length-1){
+      this.slideIndex=0
+    }
+    
+   this.slideIndex++
+    
+    let that=this
+    
+    setTimeout(function()  {
+        that.show()
+      }, 2000);
 
-    let element = document.getElementsByClassName("classText")[classIndex]
-
-    let origin = -65
-
-    txt.forEach(x => {
-      let b = `<p style='height:${radius}px;position:absolute;transform:rotate(${origin}deg);transform-origin:0 100%'>${x}</p>`;
-      element.innerHTML += b
-      origin += deg
-
-    })
   }
-
 }

@@ -29,3 +29,32 @@
     font-weight: bold;
     color: rgb(49, 37, 37)
 }
+
+.img {
+    height: 300px;
+    width: auto;
+    padding: 15px;
+    border: solid 1px #ddd;
+    border-radius: 15px;
+}
+
+.carousel {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.section {
+    margin: 0 auto;
+    max-width: 1200px;
+    margin-bottom: 30px;
+    background-color: #eee;
+    padding: 30px;
+}
+
+.text {
+    font-size: 32px;
+    font-weight: bold;
+}

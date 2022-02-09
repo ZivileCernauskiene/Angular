@@ -214,9 +214,9 @@
 .egg9,
 .egg10,
 .egg11 {
-    transition: ease;
+    /* transition: ease;
     transition-duration: .5s;
-    animation: ver-rotate-egg .5s linear;
+    animation: ver-rotate-egg .5s linear; */
 }
 
 .round,
@@ -267,9 +267,9 @@
 .triangle9,
 .triangle10,
 .triangle11 {
-    transition: ease;
+    /* transition: ease;
     transition-duration: .5s;
-    animation: ver-rotate .5s linear;
+    animation: ver-rotate .5s linear; */
 }
 
 .full {}
