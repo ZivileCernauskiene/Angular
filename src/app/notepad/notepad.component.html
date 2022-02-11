@@ -35,11 +35,11 @@
 
                 <button [title]="delete[languageNumber-1]" class="remove-button" (click)="deleteNote(x.id)"><i class="fa fa-trash"></i></button>
 
-                <textarea [ngStyle]="{'z-index':x.pozZ}" *ngIf="x.saved" class="note" [(ngModel)]="x.tekstas" name="tekstas" id="{{x.id}}" ngModel #tekstas="ngModel" disabled placeholder="{{place2[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'background-color':x.color.innerColor}"
+                <textarea [ngStyle]="{'z-index':x.pozZ}" *ngIf="x.saved" class="note" [(ngModel)]="x.text" name="text" id="{{x.id}}" ngModel #text="ngModel" disabled placeholder="{{place2[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'background-color':x.color.innerColor}"
                     [title]="saved[languageNumber-1]">
                     
                 </textarea>
-                <textarea *ngIf="!x.saved" ngModel #tekstas="ngModel" [(ngModel)]="x.tekstas" class="note" name="tekstas" id="{{x.id}} " [title]="unsaved[languageNumber-1]" placeholder="{{place[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'border-color':'black', 'background-color':x.color.innerColor}">
+                <textarea *ngIf="!x.saved" ngModel #text="ngModel" [(ngModel)]="x.text" class="note" name="text" id="{{x.id}} " [title]="unsaved[languageNumber-1]" placeholder="{{place[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'border-color':'black', 'background-color':x.color.innerColor}">
                     
                 </textarea>
 

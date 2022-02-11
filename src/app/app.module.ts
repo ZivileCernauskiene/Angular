@@ -16,6 +16,11 @@ import { NgxDragResizeModule } from 'ngx-drag-resize';
 import { CodeExplanationComponent } from './code-explanation/code-explanation.component';
 import { MemoryComponent } from './memory/memory.component';
 import { KontaktaiComponent } from './kontaktai/kontaktai.component';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { RegisterLoginComponent } from './register-login/register-login.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +33,10 @@ import { KontaktaiComponent } from './kontaktai/kontaktai.component';
     NotepadComponent,
     CodeExplanationComponent,
     MemoryComponent,
-    KontaktaiComponent
+    KontaktaiComponent,
+    RegisterLoginComponent
+
+    
   ],
   imports: [
     BrowserModule,
@@ -37,7 +45,9 @@ import { KontaktaiComponent } from './kontaktai/kontaktai.component';
     DragDropModule,
     NgxDragResizeModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

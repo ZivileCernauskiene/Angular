@@ -1,6 +1,8 @@
 
 import { Component, HostListener, NgModule, OnInit } from '@angular/core';
 
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 import { Form, FormBuilder, FormControl, NgForm } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LanguageService } from '../language.service';
@@ -21,17 +23,21 @@ import { LanguageService } from '../language.service';
     }
         
         `
-      ]
+    ]
 })
 
 export class NotepadComponent implements OnInit {
 
-    constructor(private fb:FormBuilder, private language:LanguageService) { 
-        this.language.languageNumber.subscribe(x=>this.languageNumber=x)
+    constructor(private fb: FormBuilder, private language: LanguageService, private firebase:AngularFirestore) {
+        this.language.languageNumber.subscribe(x => this.languageNumber = x)
+
+        this.firebase.collection('Color').valueChanges().subscribe((x:any)=>this.colorObject=x)
     }
 
     ngOnInit(): void {
-        this.addNote();
+        if(this.noteList.length==0){
+            this.noteList.push({ text: "", id: this.noteindex, saved: false, width: 250, height: 120, pozZ: this.Zindex, top: 30, left: 15, color: { innerColor: 'rgb(255, 80, 188)', outerColor: '#f0f' } })
+        }
     }
 
     Zindex = 0
@@ -40,54 +46,49 @@ export class NotepadComponent implements OnInit {
     FromDb = false
     enableEdit = true
     top = 30
-    left = 15
+    left = 335
     spalva = "#f0f"
 
-    languageNumber=this.language.getLanguage()
-    delete=["Delete", "Ištrinti"]
-    edit=["Edit", "Redaguoti"]
-    save=["Save", "Išsaugoti"]
-    place=["Write Your text here", "Savo tekstą rašykite čia"]
-    place2=["Empty note saved. Press Edit to write Your text", "Išsaugotas tuščias užrašas. Norėdami įrašyti, spauskite redaguoti"]
-    saved=["Saved. Press button to edit", "Išsaugota. Redaguoti paspaudus mygtuką"]
-    unsaved=["Unsaved! Press button to save", "Neišsaugota! Išsaugoti paspaudus mygtuką"]
-    add=["Add note", "Pridėti užrašą"]
+    languageNumber = this.language.getLanguage()
+    delete = ["Delete", "Ištrinti"]
+    edit = ["Edit", "Redaguoti"]
+    save = ["Save", "Išsaugoti"]
+    place = ["Write Your text here", "Savo tekstą rašykite čia"]
+    place2 = ["Empty note saved. Press Edit to write Your text", "Išsaugotas tuščias užrašas. Norėdami įrašyti, spauskite redaguoti"]
+    saved = ["Saved. Press button to edit", "Išsaugota. Redaguoti paspaudus mygtuką"]
+    unsaved = ["Unsaved! Press button to save", "Neišsaugota! Išsaugoti paspaudus mygtuką"]
+    add = ["Add note", "Pridėti užrašą"]
 
-    colorForm=this.fb.group({
-        color:'#f0f'
+    colorForm = this.fb.group({
+        color: '#f0f'
     })
 
 
 
-    colorList=["red", "blue", "violet", "brown", "pink"]
+    colorList = ["red", "blue", "violet", "brown", "pink"]
 
-    colorObject=[
-        {inner: 'rgb(255, 80, 188)', outer:'#f0f'},
-        {inner: '#EF5350', outer:'#D32F2F'},
-        {inner: '#CE93D8', outer:'#7B1FA2'},
-        {inner: '#64B5F6', outer:'#1976D2'},
-        {inner: '#81C784', outer:'#43A047'},
-        {inner: '#FFB74D', outer:'#FB8C00'},
+    colorObject:any[] = [
+        
     ]
 
-    ChangeColor(){
-        this.spalva=this.colorForm.value.color;
-        
+    ChangeColor() {
+        this.spalva = this.colorForm.value.color;
+
     }
-    
+
     addNote() {
-        
+
         this.noteindex++
-        let screenWidth = window.innerWidth-250;
+        let screenWidth = window.innerWidth - 250;
         if (this.left > screenWidth) {
             this.left = 15
             this.top += 220
         }
         this.Zindex++;
-        let colorIndex= this.colorObject.indexOf(this.colorObject.filter(x=>x.outer==this.colorForm.value.color)[0])
-        
+        let colorIndex = this.colorObject.indexOf(this.colorObject.filter(x => x.outer == this.colorForm.value.color)[0])
 
-        let noteToAdd: iNote = { tekstas: "", id: this.noteindex, saved: false, width: 250, height: 120, pozZ: this.Zindex, top: this.top, left: this.left, color:{innerColor:this.colorObject[colorIndex].inner, outerColor:this.colorForm.value.color} }
+
+        let noteToAdd: iNote = { text: "", id: this.noteindex, saved: false, width: 250, height: 120, pozZ: this.Zindex, top: this.top, left: this.left, color: { innerColor: this.colorObject[colorIndex].inner, outerColor: this.colorForm.value.color } }
         for (let index = 0; index < this.noteList.length; index++) {
             let item = this.noteList[index];
             let myElement = document.getElementById("note" + item.id)
@@ -111,18 +112,17 @@ export class NotepadComponent implements OnInit {
         }
         this.left += 320
         this.noteList.push(noteToAdd)
+        
         console.log(noteToAdd)
     }
 
-    getPercentageValue(elemWidth:number)
-    {
+    getPercentageValue(elemWidth: number) {
         let screenWidth = window.innerWidth;
 
         return elemWidth * 100 / screenWidth;
     }
 
-    changeColor(n: number)
-    {
+    changeColor(n: number) {
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0]);
         // this.noteList[i].color = this.noteList[i].color == "yellow" ? "" : "yellow";
     }
@@ -130,34 +130,37 @@ export class NotepadComponent implements OnInit {
     saveNote(n: number, form: NgForm) {
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
         this.noteList[i].saved = true
-        this.noteList[i].tekstas = form.value.tekstas
+        this.noteList[i].text = form.value.text
         let noteToSaveForm = document.getElementById("note" + n);
-        let noteToSaveTexarea = noteToSaveForm?.querySelector('textarea');
+        
 
-        if (noteToSaveTexarea) {
-            let parentElement = noteToSaveTexarea.parentElement;
+        if (noteToSaveForm?.parentElement) {
+            
 
-            if (parentElement?.style.transform) {
-                const values = parentElement?.style.transform.split(/\w+\(|\);?/);
+            if (noteToSaveForm.parentElement.style.transform) {
+                const values = noteToSaveForm?.parentElement?.style.transform.split(/\w+\(|\);?/);
                 const transform = values[1].split(/,\s?/g).map(numStr => parseInt(numStr));
                 this.noteList[i].pozX = transform[0]
                 this.noteList[i].pozY = transform[1]
+                
             }
 
-            this.noteList[i].width = noteToSaveTexarea.getBoundingClientRect().width - 8;
-            this.noteList[i].height = noteToSaveTexarea.getBoundingClientRect().height - 8;
+            this.noteList[i].width = noteToSaveForm.getBoundingClientRect().width -8;
+            this.noteList[i].height = noteToSaveForm.getBoundingClientRect().height-32 ;
 
-            let widthToSave = this.getPercentageValue(noteToSaveTexarea.getBoundingClientRect().width - 8);
-
-            console.log(this.noteList[i].width);
+            let widthToSave = this.getPercentageValue(noteToSaveForm.getBoundingClientRect().width );
+            //this.firebase.collection('/User/0aAr1PhpWwVHYNL90yyt/Note').add(this.noteList[i])
+            console.log(this.noteList[i]);
         }
+
+        
         //TODO POST
     }
 
     deleteNote(n: number) {
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
 
-        let confirmation = confirm("Ar tikrai norite pašalinti savo tekstą: " + this.noteList[i].tekstas + " ?")
+        let confirmation = confirm("Ar tikrai norite pašalinti savo tekstą: " + this.noteList[i].text + " ?")
         if (confirmation) {
             this.noteList.splice(i, 1)
             this.Zindex--
@@ -188,8 +191,8 @@ export class NotepadComponent implements OnInit {
         return maxIndex;
     };
 
-    
-    change(){
+
+    change() {
         console.log("veikia")
     }
 
@@ -253,7 +256,7 @@ export class NotepadComponent implements OnInit {
 }
 
 export interface iNote {
-    tekstas: string,
+    text: string,
     id: number,
     width: number,
     height: number,
@@ -263,8 +266,12 @@ export interface iNote {
     pozZ: number,
     top: number,
     left: number,
-    color:{
-        innerColor:string,
-        outerColor:string
+    color: {
+        innerColor: string,
+        outerColor: string
     }
+}
+interface iColor {
+    innerColor: string,
+    outerColor: string
 }

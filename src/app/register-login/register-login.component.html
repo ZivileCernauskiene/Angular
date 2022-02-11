@@ -1,0 +1,13 @@
+<p>register-login works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="check()">
+    <label for="username">username</label>
+    <input type="text" [formControlName]="a" id="username">
+    <label for="email">email</label>
+    <input type="text" formControlName="email">
+    <label for="password">pass1</label>
+    <input type="text" formControlName="password">
+    <label for="password2">password2</label>
+    <input type="text" formControlName="password2">
+    <button type="submit" [disabled]="!registerForm.valid">submit</button>
+
+</form>
