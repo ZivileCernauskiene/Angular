@@ -9,11 +9,13 @@ import { MemoryComponent } from './memory/memory.component';
 import { NotepadComponent } from './notepad/notepad.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 
+import { CanComponentDeactivate, DeactivationService } from './deactivation.service';
+
 const routes: Routes = [
   {path: 'index', component: MainComponent},
   {path: 'code', component: CodeFormComponent},
   {path: 'mano', component: ManoFormaComponent},
-  {path:'notes', component:NotepadComponent},
+  {path:'notes', component:NotepadComponent, canDeactivate:[DeactivationService]},
   {path:'memory', component:MemoryComponent},
   {path:'contact', component:KontaktaiComponent},
   {path:'dec', component:DecodeFormComponent},
@@ -24,7 +26,9 @@ const routes: Routes = [
 
 
 @NgModule({
+  providers:[DeactivationService],
   imports: [RouterModule.forRoot(routes, { useHash: true }) ],
   exports: [RouterModule]
+  
 })
 export class AppRoutingModule { }

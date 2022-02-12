@@ -43,6 +43,9 @@ export class NotepadComponent implements OnInit {
     Zindex = 0
     noteindex = 0
     noteList: iNote[] = []
+
+    modal=false
+    
     FromDb = false
     enableEdit = true
     top = 30
@@ -243,6 +246,9 @@ export class NotepadComponent implements OnInit {
             //this.noteList.sort((a, b) => (a.id < b.id ? -1 : 1))*/
 
         }
+        if(!(elem.target as Element).closest('.modal')&&(elem.target as Element).closest('.modal-container')){
+            alert(this.modal)
+        }
     }
     onmouseup(elem: MouseEvent) {
         if ((elem.target as Element).closest('.note-container')) {
@@ -250,7 +256,40 @@ export class NotepadComponent implements OnInit {
             console.log(myElement?.getBoundingClientRect())
 
 
+
         }
+    }
+
+    modalSaveall(){
+        return true
+    }
+
+    modalSave(){
+        this.modalOpen=false
+        return true
+    }
+
+    modalExit(){
+        this.modalOpen=false
+        return false
+    }
+    modalOpen=false
+
+
+
+    canDeactivate(){
+        let check = true
+        
+
+        for(let x of this.noteList){
+            if(!x.saved){
+                this.modalOpen=true
+                
+                return true
+            }
+        }
+        
+        return check
     }
 
 }

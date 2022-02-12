@@ -20,6 +20,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { RegisterLoginComponent } from './register-login/register-login.component';
+import { CanDeactivateComponent } from './can-deactivate/can-deactivate.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { RegisterLoginComponent } from './register-login/register-login.componen
     CodeExplanationComponent,
     MemoryComponent,
     KontaktaiComponent,
-    RegisterLoginComponent
+    RegisterLoginComponent,
+    CanDeactivateComponent
 
     
   ],

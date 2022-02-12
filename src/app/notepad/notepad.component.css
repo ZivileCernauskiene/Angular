@@ -19,6 +19,53 @@
     width: 60px;
 }
 
+.modal-container {
+    display: block;
+    width: 100vmax;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 255, 0.4);
+}
+
+.modal {
+    width: 30%;
+    height: 25%;
+    min-width: 100px;
+    min-height: 40px;
+    background-color: azure;
+    opacity: 1;
+    top: 50%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-checkbox {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.modal-buttons {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+}
+
+.modal-buttons button {
+    padding: 10px;
+    border-radius: 10%;
+    margin: 5px;
+}
+
 
 /*.fixed-bg {
     background-image: url("pattern.png");

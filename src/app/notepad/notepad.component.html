@@ -55,3 +55,19 @@
         <div class="clearfix"></div>
     </div>
 </div>
+
+<div class="modal-container" *ngIf="modalOpen">
+    <div class="modal">
+        <p>ar tikrai iseiti</p>
+        <div class="modal-checkbox">
+            <p>saugoti visus:(dar neveikia checkbox)</p>
+            <input type="checkbox" checked="modal">
+        </div>
+        <div class="modal-buttons">
+            <button (click)="modalSave()">saugoti1</button>
+            <button (click)="modalExit()">nesaugoti nieko</button>
+        </div>
+
+    </div>
+
+</div>
