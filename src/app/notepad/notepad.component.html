@@ -24,18 +24,19 @@
             </form> -->
         </div>
 
-        <div class="note-container {{x.color}}" *ngFor="let x of noteList" cdkDrag (cdkDragStarted)="dragStart($event) " [ngStyle]="{'z-index':x.pozZ, 'top' : x.top+'px', 'left' : x.left+'px'}">
+        <div class="note-container {{x.color}}" *ngFor="let x of noteList" cdkDrag (cdkDragStarted)="dragStart($event) " [ngStyle]="{'z-index':x.pozZ, 'top' : x.top+'px', 'left' : x.left+'px','transform': 'translate3d(' + x.pozX + 'px, '+x.pozY + 'px, ' + x.pozZ + 'px)'}"
+            [cdkDragDisabled]="x.saved">
 
-            <form [ngStyle]="{'transform': FromDb? 'translate3d(' + x.pozX + 'px, '+x.pozY + 'px, ' + x.pozZ + 'px)':''}" [id]="'note'+x.id" ngNativeValidate #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+            <form [id]="'note'+x.id" ngNativeValidate #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
 
-                <div class="draggable-header" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"><i class="fa fa-compress"></i></div>
-                <div class="draggable-side-left" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"></div>
-                <div class="draggable-side-right" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"></div>
-                <div class="draggable-footer" cdkDragHandle [ngStyle]="{'background-color':x.color.outerColor}"></div>
+                <div class="draggable-header" cdkDragHandle [title]="x.saved?drag[languageNumber-1]:''" [ngStyle]="{'background-color':x.color.outerColor}"><i class="fa fa-compress"></i></div>
+                <div class="draggable-side-left" cdkDragHandle [title]="x.saved?drag[languageNumber-1]:''" [ngStyle]="{'background-color':x.color.outerColor}"></div>
+                <div class="draggable-side-right" cdkDragHandle [title]="x.saved?drag[languageNumber-1]:''" [ngStyle]="{'background-color':x.color.outerColor}"></div>
+                <div class="draggable-footer" cdkDragHandle [title]="x.saved?drag[languageNumber-1]:''" [ngStyle]="{'background-color':x.color.outerColor}"></div>
 
                 <button [title]="delete[languageNumber-1]" class="remove-button" (click)="deleteNote(x.id)"><i class="fa fa-trash"></i></button>
 
-                <textarea [ngStyle]="{'z-index':x.pozZ}" *ngIf="x.saved" class="note" [(ngModel)]="x.text" name="text" id="{{x.id}}" ngModel #text="ngModel" disabled placeholder="{{place2[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ, 'background-color':x.color.innerColor}"
+                <textarea [ngStyle]="{'z-index':x.pozZ}" *ngIf="x.saved" class="note" [(ngModel)]="x.text" name="text" id="{{x.id}}" ngModel #text="ngModel" disabled placeholder="{{place2[languageNumber-1]}}" [ngStyle]="{'width': x.width+'px', 'height': x.height+'px' , 'z-index':x.pozZ,'border-color':x.color.innerColor, 'background-color':x.color.innerColor, 'resize':'none'}"
                     [title]="saved[languageNumber-1]">
                     
                 </textarea>
@@ -58,10 +59,10 @@
 
 <div class="modal-container" *ngIf="modalOpen">
     <div class="modal">
-        <p>ar tikrai iseiti</p>
+        <p>Liko neissaugotu elementu. </p>
         <div class="modal-checkbox">
-            <p>saugoti visus:(dar neveikia checkbox)</p>
-            <input type="checkbox" checked="modal">
+            <p>saugoti visus?</p>
+            <input type="checkbox" (change)="checkChange()">
         </div>
         <div class="modal-buttons">
             <button (click)="modalSave()">saugoti1</button>
@@ -71,3 +72,4 @@
     </div>
 
 </div>
+<input type="hidden" id="JSDeactivator" value="JSDeactivator">

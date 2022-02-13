@@ -1,11 +1,15 @@
 
+import { NONE_TYPE } from '@angular/compiler';
 import { Component, HostListener, NgModule, OnInit } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { Form, FormBuilder, FormControl, NgForm } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DeactivationService } from '../deactivation.service';
 import { LanguageService } from '../language.service';
+import { NotesService } from '../notes.service';
 
 
 @Component({
@@ -28,7 +32,13 @@ import { LanguageService } from '../language.service';
 
 export class NotepadComponent implements OnInit {
 
-    constructor(private fb: FormBuilder, private language: LanguageService, private firebase:AngularFirestore) {
+    constructor(private fb: FormBuilder, 
+        private language: LanguageService, 
+        private firebase:AngularFirestore, 
+        private deactivation:DeactivationService, 
+        private route:Router,
+        private noteServise:NotesService) 
+        {
         this.language.languageNumber.subscribe(x => this.languageNumber = x)
 
         this.firebase.collection('Color').valueChanges().subscribe((x:any)=>this.colorObject=x)
@@ -42,16 +52,16 @@ export class NotepadComponent implements OnInit {
 
     Zindex = 0
     noteindex = 0
-    noteList: iNote[] = []
-
+    noteList: iNote[] = this.noteServise.noteList
     modal=false
     
-    FromDb = false
+    FromDb = true
     enableEdit = true
     top = 30
     left = 335
     spalva = "#f0f"
 
+    
     languageNumber = this.language.getLanguage()
     delete = ["Delete", "Ištrinti"]
     edit = ["Edit", "Redaguoti"]
@@ -61,6 +71,7 @@ export class NotepadComponent implements OnInit {
     saved = ["Saved. Press button to edit", "Išsaugota. Redaguoti paspaudus mygtuką"]
     unsaved = ["Unsaved! Press button to save", "Neišsaugota! Išsaugoti paspaudus mygtuką"]
     add = ["Add note", "Pridėti užrašą"]
+    drag=["Can't drag if saved!", "Negalima judinti jei išsaugota"]
 
     colorForm = this.fb.group({
         color: '#f0f'
@@ -80,7 +91,7 @@ export class NotepadComponent implements OnInit {
     }
 
     addNote() {
-
+        this.FromDb=false
         this.noteindex++
         let screenWidth = window.innerWidth - 250;
         if (this.left > screenWidth) {
@@ -131,9 +142,13 @@ export class NotepadComponent implements OnInit {
     }
 
     saveNote(n: number, form: NgForm) {
+        
+        
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
         this.noteList[i].saved = true
         this.noteList[i].text = form.value.text
+        
+        
         let noteToSaveForm = document.getElementById("note" + n);
         
 
@@ -142,29 +157,47 @@ export class NotepadComponent implements OnInit {
 
             if (noteToSaveForm.parentElement.style.transform) {
                 const values = noteToSaveForm?.parentElement?.style.transform.split(/\w+\(|\);?/);
-                const transform = values[1].split(/,\s?/g).map(numStr => parseInt(numStr));
-                this.noteList[i].pozX = transform[0]
-                this.noteList[i].pozY = transform[1]
-                
+
+                let sumX = 0;
+                let sumY = 0;
+                let sumZ = 0;
+
+                for (let x of values){
+                    if (x && x != ' ') {
+                        const transform = x.split(/,\s?/g).map(numStr => parseInt(numStr));
+                        sumX += transform[0];
+                        sumY += transform[1];
+                        sumZ += transform[2];
+                    }
+                }
+
+                this.noteList[i].pozX = sumX
+                this.noteList[i].pozY = sumY
             }
 
             this.noteList[i].width = noteToSaveForm.getBoundingClientRect().width -8;
             this.noteList[i].height = noteToSaveForm.getBoundingClientRect().height-32 ;
+            console.log(noteToSaveForm.getBoundingClientRect)
+            
+            
 
             let widthToSave = this.getPercentageValue(noteToSaveForm.getBoundingClientRect().width );
+            //to add to firebase:
             //this.firebase.collection('/User/0aAr1PhpWwVHYNL90yyt/Note').add(this.noteList[i])
             console.log(this.noteList[i]);
         }
 
-        
-        //TODO POST
     }
 
     deleteNote(n: number) {
+        this.FromDb=false
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
 
         let confirmation = confirm("Ar tikrai norite pašalinti savo tekstą: " + this.noteList[i].text + " ?")
         if (confirmation) {
+            if(this.noteList[i].saved){
+                this.noteServise.deleteNote(this.noteList[i])
+            }
             this.noteList.splice(i, 1)
             this.Zindex--
         }
@@ -172,8 +205,10 @@ export class NotepadComponent implements OnInit {
     }
 
     editNote(n: number) {
+        this.FromDb=false
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
         this.noteList[i].saved = false
+        
     }
 
     submitForm(x: NgForm) {
@@ -200,6 +235,7 @@ export class NotepadComponent implements OnInit {
     }
 
     dragStart(event: any) {
+        console.log('dragstart')
 
         /*let elementId = event.source.element.nativeElement.childNodes[0].getAttribute('id')
         if(event.source.element.nativeElement.childNodes[0].isFocused){
@@ -215,6 +251,17 @@ export class NotepadComponent implements OnInit {
             //console.log(this.noteList[i])
         }   */
     }
+
+//     @HostListener('window:beforeunload', ['$event'])
+//     beforeunloadHandler($event:any) {
+//     alert('asd')
+//     $event.preventDefault()
+//     console.log($event);
+//     'kazkodel su situo neveikia : ieskoti zemiau su JS'
+// }
+    
+
+    
     @HostListener('document:mousedown', ['$event'])
     onmousedown(elem: MouseEvent) {
         if ((elem.target as Element).closest('.note-container')) {
@@ -253,46 +300,73 @@ export class NotepadComponent implements OnInit {
     onmouseup(elem: MouseEvent) {
         if ((elem.target as Element).closest('.note-container')) {
             let myElement = (elem.target as Element).closest('.note-container')
-            console.log(myElement?.getBoundingClientRect())
+            console.log('mouse event:'+myElement?.getBoundingClientRect())
 
 
 
         }
     }
 
-    modalSaveall(){
-        return true
-    }
+
+    
 
     modalSave(){
         this.modalOpen=false
-        return true
+        this.noteList[0].saved=true
+        if(this.modalCheck){
+            this.noteList.forEach(x =>{ 
+                if(!x.saved){
+                    
+                }
+            });
+        }
+        else {
+
+        }
+        this.route.navigate([this.deactivation.nextRoute])
+
     }
 
+    modalCheck=false
+    checkChange(){
+        if(this.modalCheck){
+            this.modalCheck=false
+        }
+        else this.modalCheck=true
+
+    }
     modalExit(){
         this.modalOpen=false
+        
         return false
     }
     modalOpen=false
 
-
-
+    
     canDeactivate(){
-        let check = true
-        
-
         for(let x of this.noteList){
             if(!x.saved){
                 this.modalOpen=true
-                
-                return true
+                return false
             }
         }
-        
-        return check
+        return true
     }
 
+    JSDeactivator=false
 }
+
+
+//  window.addEventListener('beforeunload', (event) => {
+//     if(document.getElementById('JSDeactivator')){
+//         event.preventDefault();
+//     console.log('veikia JS')
+//     // Chrome requires returnValue to be set.
+//    event.returnValue = '';
+//     }
+     
+   
+//  });
 
 export interface iNote {
     text: string,
@@ -300,7 +374,8 @@ export interface iNote {
     width: number,
     height: number,
     saved?: boolean,
-    pozX?: number,
+    fromDb?:boolean,
+    pozX?: number ,
     pozY?: number,
     pozZ: number,
     top: number,

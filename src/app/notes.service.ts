@@ -11,9 +11,18 @@ export class NotesService {
 noteList:iNote[]=[]
 
 addNote(a:iNote){
+  a.fromDb=true
   this.noteList.push(a)
 }
+editNote(a:iNote){
 
-
+}
+deleteNote(a:iNote){
+if(this.noteList.includes(a)){
+  let index= this.noteList.indexOf(a)
+  alert('sekmingai istrinta' + a.id)
+  this.noteList.splice(index,1)
+}
+}
 
 }
