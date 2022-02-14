@@ -348,6 +348,15 @@ export class NotepadComponent implements OnInit {
         
         return false
     }
+    modalDelete(){
+        this.modalOpen=false
+        this.noteList.forEach(x=>{
+            if(!x.saved){
+                this.deleteNote(x.id)
+            }
+        })
+        this.route.navigate([this.deactivation.nextRoute])
+    }
     modalOpen=false
     modaltext=''
     
