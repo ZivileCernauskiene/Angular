@@ -17,7 +17,7 @@ export class LanguageService {
     localStorage.setItem('language', a.toString());
   }
   getLanguage():number{
-    if(Number(this.storedLanguage)){
+    if(Number(this.storedLanguage)==1||Number(this.storedLanguage)==2 ){
       return Number(this.storedLanguage)
     }
     else return this.language

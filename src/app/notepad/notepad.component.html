@@ -1,7 +1,8 @@
 <div class="container">
 
-    <div>
-
+    <div class="info">
+        <button (click)="infoAction()" class="info-button"><i class="fa fa-question"></i></button>
+        <app-note-explanation *ngIf="infoOpen" class="explanation"></app-note-explanation>
     </div>
     <div class="notes">
         <div class="addForm">
@@ -64,6 +65,7 @@
             <p>saugoti visus?</p>
             <input type="checkbox" (change)="checkChange()">
         </div>
+        <p>saugomas tekstas: {{modaltext}}</p>
         <div class="modal-buttons">
             <button (click)="modalSave()">saugoti1</button>
             <button (click)="modalExit()">nesaugoti nieko</button>

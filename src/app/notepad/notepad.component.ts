@@ -51,7 +51,7 @@ export class NotepadComponent implements OnInit {
     }
 
     Zindex = 0
-    noteindex = 0
+    noteindex = this.noteServise.noteId
     noteList: iNote[] = this.noteServise.noteList
     modal=false
     
@@ -87,7 +87,6 @@ export class NotepadComponent implements OnInit {
 
     ChangeColor() {
         this.spalva = this.colorForm.value.color;
-
     }
 
     addNote() {
@@ -125,7 +124,8 @@ export class NotepadComponent implements OnInit {
             }
         }
         this.left += 320
-        this.noteList.push(noteToAdd)
+        this.noteServise.noteList.push(noteToAdd)
+        
         
         console.log(noteToAdd)
     }
@@ -136,17 +136,18 @@ export class NotepadComponent implements OnInit {
         return elemWidth * 100 / screenWidth;
     }
 
-    changeColor(n: number) {
-        let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0]);
-        // this.noteList[i].color = this.noteList[i].color == "yellow" ? "" : "yellow";
-    }
-
-    saveNote(n: number, form: NgForm) {
+    
+    saveNote(n: number, form: NgForm|string) {
         
         
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
         this.noteList[i].saved = true
-        this.noteList[i].text = form.value.text
+        if(typeof(form)==="string"){
+            this.noteList[i].text=form
+        }
+        else{
+            this.noteList[i].text=form.value.text
+        }
         
         
         let noteToSaveForm = document.getElementById("note" + n);
@@ -212,7 +213,7 @@ export class NotepadComponent implements OnInit {
     }
 
     submitForm(x: NgForm) {
-        console.log("forma padavem")
+        
     }
     grabber = false;
 
@@ -294,7 +295,11 @@ export class NotepadComponent implements OnInit {
 
         }
         if(!(elem.target as Element).closest('.modal')&&(elem.target as Element).closest('.modal-container')){
-            alert(this.modal)
+            this.modalOpen=false
+        }
+
+        if(!(elem.target as Element).closest('.info')&&this.infoOpen){
+            this.infoOpen=false
         }
     }
     onmouseup(elem: MouseEvent) {
@@ -307,21 +312,24 @@ export class NotepadComponent implements OnInit {
         }
     }
 
-
-    
+    infoOpen=false
+    infoAction(){
+        this.infoOpen=true
+    }
 
     modalSave(){
         this.modalOpen=false
-        this.noteList[0].saved=true
+        
         if(this.modalCheck){
             this.noteList.forEach(x =>{ 
                 if(!x.saved){
-                    
+                    this.saveNote(x.id, x.text)
                 }
             });
         }
         else {
-
+           let note= this.noteList.filter(x=>!x.saved)[0]
+           this.saveNote(note.id, note.text)
         }
         this.route.navigate([this.deactivation.nextRoute])
 
@@ -341,12 +349,14 @@ export class NotepadComponent implements OnInit {
         return false
     }
     modalOpen=false
-
+    modaltext=''
     
     canDeactivate(){
+        this.noteServise.noteId=this.noteindex
         for(let x of this.noteList){
             if(!x.saved){
                 this.modalOpen=true
+                this.modaltext=x.text
                 return false
             }
         }

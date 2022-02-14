@@ -9,7 +9,7 @@ export class NotesService {
   constructor() { }
 
 noteList:iNote[]=[]
-
+noteId=0
 addNote(a:iNote){
   a.fromDb=true
   this.noteList.push(a)

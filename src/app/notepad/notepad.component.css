@@ -1,12 +1,34 @@
 .container {
     width: 100%;
     display: inline-block;
-    /*min-width: 800px;*/
+    display: block;
+    height: calc(100vh - 5vmax);
+    width: 100vw;
+    background-image: url("pattern.png");
+    background-repeat: repeat;
+    background-color: rgb(247, 222, 186);
     position: relative;
 }
 
 .addForm {
     padding: 5px 0 0px 10px;
+}
+
+.info {}
+
+.explanation {
+    position: fixed;
+    top: 130px;
+    right: 20px;
+    background-color: beige;
+}
+
+.info-button {
+    padding: 5px;
+    width: 22px;
+    position: fixed;
+    top: 105px;
+    right: 20px;
 }
 
 .colorSelect {
@@ -27,6 +49,7 @@
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 255, 0.4);
+    z-index: 1000;
 }
 
 .modal {
@@ -82,14 +105,7 @@
     top: 0;
 }*/
 
-.notes {
-    display: block;
-    height: calc(100vh - 5vmax);
-    width: 100vw;
-    background-image: url("pattern.png");
-    background-repeat: repeat;
-    background-color: rgb(247, 222, 186);
-}
+.notes {}
 
 .note-container {
     /* display: flex;
