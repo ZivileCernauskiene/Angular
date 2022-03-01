@@ -193,7 +193,12 @@ export class NotepadComponent implements OnInit {
     deleteNote(n: number) {
         this.FromDb=false
         let i = this.noteList.indexOf(this.noteList.filter(x => x.id == n)[0])
-
+        let noteText=this.noteList[i].text
+        if(!noteText){
+            this.noteList.splice(i, 1)
+            this.Zindex--
+            return
+        }
         let confirmation = confirm("Ar tikrai norite pašalinti savo tekstą: " + this.noteList[i].text + " ?")
         if (confirmation) {
             if(this.noteList[i].saved){
@@ -317,6 +322,9 @@ export class NotepadComponent implements OnInit {
         this.infoOpen=true
     }
 
+
+    //MODAL SETTINGS
+
     modalSave(){
         this.modalOpen=false
         
@@ -348,6 +356,7 @@ export class NotepadComponent implements OnInit {
         
         return false
     }
+    
     modalDelete(){
         this.modalOpen=false
         this.noteList.forEach(x=>{
@@ -355,15 +364,17 @@ export class NotepadComponent implements OnInit {
                 this.deleteNote(x.id)
             }
         })
+        console.log(this.deactivation.nextRoute)
         this.route.navigate([this.deactivation.nextRoute])
     }
+
     modalOpen=false
     modaltext=''
     
     canDeactivate(){
         this.noteServise.noteId=this.noteindex
         for(let x of this.noteList){
-            if(!x.saved){
+            if(!x.saved&&x.text){
                 this.modalOpen=true
                 this.modaltext=x.text
                 return false
